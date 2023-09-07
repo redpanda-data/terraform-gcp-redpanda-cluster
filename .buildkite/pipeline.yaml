@@ -1,0 +1,30 @@
+agents:
+  queue: "k8s-builders"
+
+steps:
+  - label: Terraform Apply and Destroy Proxy
+    key: apply-destroy-proxy
+    command: .buildkite/scripts/apply.sh --tf_dir examples/proxy --prefix rp-gcp-pvt --gcp_creds "$DEVEX_GCP_CREDS_BASE64"
+    plugins:
+      - docker#v5.4.0:
+          image: glrp/atgt:latest
+          environment:
+            - GCP_CREDS
+
+  - label: Terraform Apply and Destroy Tiered Storage
+    key: apply-destroy-ts
+    command: .buildkite/scripts/apply.sh --tf_dir examples/tiered_storage --prefix rp-gcp-ts --gcp_creds "$DEVEX_GCP_CREDS_BASE64"
+    plugins:
+      - docker#v5.4.0:
+          image: glrp/atgt:latest
+          environment:
+            - GCP_CREDS
+
+  - label: Terraform Apply and Destroy Simple
+    key: apply-destroy-simple
+    command: .buildkite/scripts/apply.sh --tf_dir examples/simple --prefix rp-gcp-simple --gcp_creds "$DEVEX_GCP_CREDS_BASE64"
+    plugins:
+      - docker#v5.4.0:
+          image: glrp/atgt:latest
+          environment:
+            - GCP_CREDS
