@@ -27,13 +27,13 @@ terraform init || exit 1
 trap cleanup EXIT INT TERM
 cleanup() {
     error_code=$?
-    terraform destroy --auto-approve --var="gcp_creds=$GCP_CREDS" --var="deployment_prefix=$PREFIX" --var="public_key_path=testkey"
+    terraform destroy --auto-approve --var="gcp_creds=$GCP_CREDS" --var="deployment_prefix=$PREFIX" --var="public_key_path=testkey" --var="project_id=hallowed-ray-376320"
     rm -f testkey
     rm -f testkey.pub
     exit $error_code
 }
 
-terraform apply --var="deployment_prefix=$PREFIX" --var="gcp_creds=$GCP_CREDS" --var="public_key_path=testkey" --auto-approve
+terraform apply --auto-approve --var="deployment_prefix=$PREFIX" --var="gcp_creds=$GCP_CREDS" --var="public_key_path=testkey" --var="project_id=hallowed-ray-376320"
 
 # Trap will handle destroy so just exit
 exit $?

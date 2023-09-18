@@ -14,7 +14,7 @@ variable "instance_group_name" {
 }
 
 variable "broker_count" {
-  description = "The number of nodes to deploy."
+  description = "The number of Redpanda brokers to deploy."
   type        = number
   default     = "3"
 }

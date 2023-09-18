@@ -4,7 +4,7 @@ variable "gcp_creds" {
 }
 
 provider "google" {
-  project = "hallowed-ray-376320"
+  project = var.project_id
   region = var.region
   credentials = base64decode(var.gcp_creds)
 }
@@ -54,4 +54,8 @@ variable "deployment_prefix" {
 
 variable "public_key_path" {
   type = string
+}
+
+variable "project_id" {
+  default = ""
 }

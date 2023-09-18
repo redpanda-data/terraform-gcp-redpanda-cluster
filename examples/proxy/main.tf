@@ -4,7 +4,7 @@ variable "gcp_creds" {
 }
 
 provider "google" {
-  project = "hallowed-ray-376320"
+  project = var.project_id
   region = var.region
   credentials = base64decode(var.gcp_creds)
 }
@@ -143,4 +143,8 @@ resource "google_compute_firewall" "monitor-to-broker" {
 
 variable "deployment_prefix" {
   type = string
+}
+
+variable "project_id" {
+  default = ""
 }
