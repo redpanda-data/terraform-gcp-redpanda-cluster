@@ -1,16 +1,12 @@
 variable "region" {
   default = "us-west2"
+  type    = string
 }
 
 variable "availability_zone" {
   description = "The zone where the cluster will be deployed [a,b,...]"
   default     = ["a", "b"]
   type        = list(string)
-}
-
-variable "instance_group_name" {
-  description = "The name of the GCP instance group"
-  default     = "redpanda-group"
 }
 
 variable "broker_count" {
@@ -41,20 +37,24 @@ variable "image" {
   # See https://cloud.google.com/compute/docs/images#os-compute-support
   # for an updated list.
   default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  type    = string
 }
 
-variable machine_type {
+variable broker_machine_type {
   # List of available machines per region/ zone:
   # https://cloud.google.com/compute/docs/regions-zones#available
   default = "n2-standard-2"
+  type    = string
 }
 
 variable monitor_machine_type {
   default = "n2-standard-2"
+  type    = string
 }
 
 variable client_machine_type {
   default = "n2-standard-2"
+  type    = string
 }
 
 variable "public_key_path" {
@@ -63,17 +63,19 @@ variable "public_key_path" {
   default     = "~/.ssh/id_rsa.pub"
 }
 
-
 variable "ssh_user" {
   description = "The ssh user. Must match the one in the public ssh key's comments."
+  type        = string
 }
 
 variable "enable_monitoring" {
-  default = "yes"
+  default = true
+  type    = bool
 }
 
 variable "labels" {
   description = "passthrough of GCP labels"
+  type        = map(string)
   default     = {
     "purpose"      = "redpanda-cluster"
     "created-with" = "terraform"
@@ -81,7 +83,7 @@ variable "labels" {
 }
 
 variable "deployment_prefix" {
-  type = string
+  type    = string
   default = "rp-test"
 }
 
@@ -101,9 +103,11 @@ variable "enable_tiered_storage" {
 
 variable "subnet" {
   description = "The name of the subnet where the brokers will be deployed"
+  type        = string
 }
 
 variable "allocate_brokers_public_ip" {
-  default = true
+  default     = true
+  type        = bool
   description = "whether to allocate brokers public ip addresses"
 }

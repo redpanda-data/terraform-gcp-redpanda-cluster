@@ -1,9 +1,3 @@
-resource "random_uuid" "cluster" {}
-
-locals {
-  uuid          = random_uuid.cluster.result
-}
-
 resource "google_compute_resource_policy" "broker-rp" {
   name   = "${var.deployment_prefix}-broker-rp"
   region = var.region
@@ -14,11 +8,11 @@ resource "google_compute_resource_policy" "broker-rp" {
 }
 
 resource "google_compute_instance" "broker" {
-  count             = var.broker_count
-  name              = "${var.deployment_prefix}-rp-node-${count.index}"
-  tags              = ["broker", "rp-cluster", "${var.deployment_prefix}-tf-deployment"]
-  zone              = "${var.region}-${var.availability_zone[count.index % length(var.availability_zone)]}"
-  machine_type      = var.machine_type
+  count        = var.broker_count
+  name         = "${var.deployment_prefix}-rp-node-${count.index}"
+  tags         = ["broker", "rp-cluster", "${var.deployment_prefix}-tf-deployment"]
+  zone         = "${var.region}-${var.availability_zone[count.index % length(var.availability_zone)]}"
+  machine_type = var.broker_machine_type
 
   dynamic "service_account" {
     for_each = var.enable_tiered_storage ? [1] : []
@@ -60,7 +54,7 @@ KEYS
     access_config {}
   }
 
-  labels = tomap(var.labels)
+  labels     = tomap(var.labels)
   depends_on = [
     google_project_service.cloud_resource_manager
   ]
@@ -71,9 +65,18 @@ resource "google_compute_instance_group" "broker" {
   count     = length(var.availability_zone)
   zone      = "${var.region}-${var.availability_zone[count.index]}"
   instances = tolist(concat(
-    [for i in google_compute_instance.broker.* : i.self_link if i.zone == "${var.region}-${var.availability_zone[count.index]}"],
-    [for i in google_compute_instance.monitor.* : i.self_link if i.zone == "${var.region}-${var.availability_zone[count.index]}"],
-    [for i in google_compute_instance.client.* : i.self_link if i.zone == "${var.region}-${var.availability_zone[count.index]}"]
-   )
+    [
+      for i in google_compute_instance.broker[*] : i.self_link
+      if i.zone == "${var.region}-${var.availability_zone[count.index]}"
+    ],
+    [
+      for i in google_compute_instance.monitor[*] : i.self_link
+      if i.zone == "${var.region}-${var.availability_zone[count.index]}"
+    ],
+    [
+      for i in google_compute_instance.client[*] : i.self_link
+      if i.zone == "${var.region}-${var.availability_zone[count.index]}"
+    ]
+  )
   )
 }
