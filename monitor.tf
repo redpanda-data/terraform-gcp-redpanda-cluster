@@ -7,7 +7,7 @@ resource "google_compute_instance" "monitor" {
 
   metadata = {
     ssh-keys = <<KEYS
-${var.ssh_user}:${file(abspath(var.public_key_path))}
+${var.ssh_user}:${file(var.public_key_path)}
 KEYS
   }
 
