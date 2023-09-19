@@ -20,7 +20,7 @@ variable "broker_count" {
 }
 
 variable "ha" {
-  description = "Whether to use placement groups to create an HA topology"
+  description = "Whether to use placement groups to create an HA topology for Rack Awareness"
   type        = bool
   default     = false
 }
@@ -58,8 +58,11 @@ variable client_machine_type {
 }
 
 variable "public_key_path" {
-  description = "The ssh key."
+  type        = string
+  description = "The public key used to ssh to the hosts"
+  default     = "~/.ssh/id_rsa.pub"
 }
+
 
 variable "ssh_user" {
   description = "The ssh user. Must match the one in the public ssh key's comments."
