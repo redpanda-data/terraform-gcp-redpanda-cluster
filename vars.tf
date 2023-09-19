@@ -21,7 +21,7 @@ variable "ha" {
   default     = false
 }
 
-variable "client_nodes" {
+variable "client_count" {
   description = "The number of clients to deploy."
   type        = number
   default     = "1"

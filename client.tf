@@ -1,5 +1,5 @@
 resource "google_compute_instance" "client" {
-  count        = var.client_nodes
+  count        = var.client_count
   name         = "${var.deployment_prefix}-rp-client-${count.index}"
   tags         = ["client", "rp-cluster", "${var.deployment_prefix}-tf-deployment"]
   machine_type = var.client_machine_type
