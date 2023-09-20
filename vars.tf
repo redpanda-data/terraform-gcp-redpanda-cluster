@@ -111,3 +111,9 @@ variable "allocate_brokers_public_ip" {
   type        = bool
   description = "whether to allocate brokers public ip addresses"
 }
+
+variable "hosts_file" {
+  default     = "hosts.ini"
+  description = "path and name for ansible hosts file generated as output of this module"
+  type        = string
+}

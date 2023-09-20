@@ -17,5 +17,5 @@ resource "local_file" "hosts_ini" {
       tiered_storage_bucket_name = try(google_storage_bucket.tiered_storage[0].name, "")
     }
   )
-  filename = "${path.module}/hosts.ini"
+  filename = var.hosts_file
 }
