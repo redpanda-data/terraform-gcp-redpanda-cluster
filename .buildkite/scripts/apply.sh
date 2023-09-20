@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export GCP_CREDS=GCP_CREDS
+export GCP_CREDS=$GCP_CREDS
 
 # Parse command line arguments
 while [[ "$#" -gt 0 ]]; do
