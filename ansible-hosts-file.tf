@@ -7,6 +7,8 @@ resource "local_file" "hosts_ini" {
       client_private_ips         = google_compute_instance.client[*].network_interface[0].network_ip
       monitor_public_ip          = google_compute_instance.monitor[0].network_interface[0].access_config[0].nat_ip
       monitor_private_ip         = google_compute_instance.monitor[0].network_interface[0].network_ip
+      connect_public_ip          = google_compute_instance.connect[0].network_interface[0].access_config[0].nat_ip
+      connect_private_ip         = google_compute_instance.connect[0].network_interface[0].network_ip
       ssh_user                   = var.ssh_user
       enable_monitoring          = var.enable_monitoring
       rack                       = length(var.availability_zone) == 1 ? google_compute_instance.broker[*].name : google_compute_instance.broker[*].zone

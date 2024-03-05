@@ -12,7 +12,7 @@ variable "availability_zone" {
 variable "broker_count" {
   description = "The number of Redpanda brokers to deploy."
   type        = number
-  default     = "3"
+  default     = 3
 }
 
 variable "ha" {
@@ -24,7 +24,13 @@ variable "ha" {
 variable "client_count" {
   description = "The number of clients to deploy."
   type        = number
-  default     = "1"
+  default     = 1
+}
+
+variable "connect_count" {
+  description = "The number of connect instances to deploy."
+  type        = number
+  default     = 0
 }
 
 variable "disks" {
@@ -53,6 +59,11 @@ variable monitor_machine_type {
 }
 
 variable client_machine_type {
+  default = "n2-standard-2"
+  type    = string
+}
+
+variable "connect_machine_type" {
   default = "n2-standard-2"
   type    = string
 }
