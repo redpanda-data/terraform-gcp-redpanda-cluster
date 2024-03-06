@@ -3,10 +3,12 @@ resource "local_file" "hosts_ini" {
     {
       broker_public_ips          = var.allocate_brokers_public_ip ? google_compute_instance.broker[*].network_interface[0].access_config[0].nat_ip : google_compute_instance.broker[*].network_interface[0].network_ip
       broker_private_ips         = google_compute_instance.broker[*].network_interface[0].network_ip
-      client_public_ips          = google_compute_instance.client[*].network_interface[0].access_config[0].nat_ip
-      client_private_ips         = google_compute_instance.client[*].network_interface[0].network_ip
-      monitor_public_ip          = google_compute_instance.monitor[0].network_interface[0].access_config[0].nat_ip
-      monitor_private_ip         = google_compute_instance.monitor[0].network_interface[0].network_ip
+      client_public_ips          = try(google_compute_instance.client[*].network_interface[0].access_config[0].nat_ip)
+      client_private_ips         = try(google_compute_instance.client[*].network_interface[0].network_ip)
+      monitor_public_ip          = try(google_compute_instance.monitor[0].network_interface[0].access_config[0].nat_ip)
+      monitor_private_ip         = try(google_compute_instance.monitor[0].network_interface[0].network_ip)
+      connect_public_ips          = try(google_compute_instance.connect[*].network_interface[0].access_config[0].nat_ip)
+      connect_private_ips         = try(google_compute_instance.connect[*].network_interface[0].network_ip)
       ssh_user                   = var.ssh_user
       enable_monitoring          = var.enable_monitoring
       rack                       = length(var.availability_zone) == 1 ? google_compute_instance.broker[*].name : google_compute_instance.broker[*].zone

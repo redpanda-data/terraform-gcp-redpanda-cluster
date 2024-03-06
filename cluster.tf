@@ -70,6 +70,10 @@ resource "google_compute_instance_group" "broker" {
       if i.zone == "${var.region}-${var.availability_zone[count.index]}"
     ],
     [
+      for i in google_compute_instance.connect[*] : i.self_link
+      if i.zone == "${var.region}-${var.availability_zone[count.index]}"
+    ],
+    [
       for i in google_compute_instance.monitor[*] : i.self_link
       if i.zone == "${var.region}-${var.availability_zone[count.index]}"
     ],
