@@ -6,6 +6,10 @@ steps:
     key: apply-destroy-proxy
     command: .buildkite/scripts/apply.sh --tf_dir examples/proxy --prefix rp-gcp-pvt --gcp_creds "$DEVEX_GCP_CREDS_BASE64"
     plugins:
+      - seek-oss/aws-sm#v2.3.2:
+          json-to-env:
+            - json-key: .
+              secret-id: sdlc/prod/buildkite/devex_gcp_creds_base64
       - docker#v5.4.0:
           image: glrp/atgt:latest
           environment:
@@ -15,6 +19,10 @@ steps:
     key: apply-destroy-ts
     command: .buildkite/scripts/apply.sh --tf_dir examples/tiered_storage --prefix rp-gcp-ts --gcp_creds "$DEVEX_GCP_CREDS_BASE64"
     plugins:
+      - seek-oss/aws-sm#v2.3.2:
+          json-to-env:
+            - json-key: .
+              secret-id: sdlc/prod/buildkite/devex_gcp_creds_base64
       - docker#v5.4.0:
           image: glrp/atgt:latest
           environment:
@@ -24,6 +32,10 @@ steps:
     key: apply-destroy-simple
     command: .buildkite/scripts/apply.sh --tf_dir examples/simple --prefix rp-gcp-simple --gcp_creds "$DEVEX_GCP_CREDS_BASE64"
     plugins:
+      - seek-oss/aws-sm#v2.3.2:
+          json-to-env:
+            - json-key: .
+              secret-id: sdlc/prod/buildkite/devex_gcp_creds_base64
       - docker#v5.4.0:
           image: glrp/atgt:latest
           environment:
@@ -33,6 +45,10 @@ steps:
     key: apply-destroy-connect
     command: .buildkite/scripts/apply.sh --tf_dir examples/connect --prefix rp-gcp-connect --gcp_creds "$DEVEX_GCP_CREDS_BASE64"
     plugins:
+      - seek-oss/aws-sm#v2.3.2:
+          json-to-env:
+            - json-key: .
+              secret-id: sdlc/prod/buildkite/devex_gcp_creds_base64
       - docker#v5.4.0:
           image: glrp/atgt:latest
           environment:
